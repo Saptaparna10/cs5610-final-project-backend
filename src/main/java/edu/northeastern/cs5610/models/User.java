@@ -8,12 +8,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 /**
- * Represents the Person class
+ * Represents the User class
  *
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Person {
+public class User {
 
 	// instance variables
 	@Id
@@ -30,7 +30,7 @@ public class Person {
 	/**
 	 * Represents the default constructor
 	 */
-	public Person() {
+	public User() {
 		super();
 	}
 	
@@ -89,7 +89,7 @@ public class Person {
 	 * Updates person
 	 * @param user
 	 */
-	public void set(Person person) {
+	public void set(User person) {
 		this.setEmail(person.getEmail() != null ? person.getEmail() : this.getEmail());
 		this.setFirstName(person.getFirstName() != null ? person.getFirstName() : this.getFirstName());
 		this.setLastName(person.getLastName() != null ? person.getLastName() : this.getLastName());
@@ -105,8 +105,8 @@ public class Person {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Person) {
-			Person temp = (Person) obj;
+		if (obj instanceof User) {
+			User temp = (User) obj;
 			return this.id == temp.id;
 		}
 		return false;
