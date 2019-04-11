@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -14,6 +15,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Recipe {
@@ -37,9 +39,15 @@ public class Recipe {
 	@JsonIgnore
 	private List<Favourite> madeFavourite;
 	
+	@ManyToMany(mappedBy = "recipes")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Cuisine> cuisines;
+	
 	
 	public Recipe() {
 		commentsReceived= new ArrayList<>();
+		madeFavourite=  new ArrayList<>();
+		cuisines=  new ArrayList<>();
 	}
 
 	public int getId() {
@@ -99,6 +107,14 @@ public class Recipe {
 		this.recipeUser = recipeUser;
 	}
 
+	public List<Cuisine> getCuisines() {
+		return cuisines;
+	}
+
+	public void setCuisines(List<Cuisine> cuisines) {
+		this.cuisines = cuisines;
+	}
+	
 	public void set(Recipe recipe) {
 		this.setContent(recipe.getContent() != null ? recipe.getContent() : this.getContent());
 		this.setTitle(recipe.getTitle() != null ? recipe.getTitle() : this.getTitle());
@@ -118,6 +134,13 @@ public class Recipe {
 				this.setMadeFavourite(recipe.getMadeFavourite());
 			} else if (!recipe.getMadeFavourite().equals(this.getMadeFavourite())) {
 				this.setMadeFavourite(recipe.getMadeFavourite());
+			}
+		}
+		if (recipe.getCuisines()!= null) {
+			if (this.getCuisines() == null) {
+				this.setCuisines(recipe.getCuisines());
+			} else if (!recipe.getCuisines().equals(this.getCuisines())) {
+				this.setCuisines(recipe.getCuisines());
 			}
 		}
 	}
