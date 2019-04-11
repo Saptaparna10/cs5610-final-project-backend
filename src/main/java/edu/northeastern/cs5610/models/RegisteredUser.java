@@ -25,12 +25,28 @@ public class RegisteredUser extends User {
 	@JsonIgnore
 	private List<Favourite> favourites;
 	
+	@OneToMany(mappedBy = "recipeUser")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonIgnore
+	private List<Recipe> recipes;
 	
+	
+
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
+	}
+
 
 	public RegisteredUser() {
 		super();
 		comments= new ArrayList<>();
 		favourites= new ArrayList<>();
+		recipes= new ArrayList<>();
 	}
 	
 	
@@ -64,6 +80,14 @@ public class RegisteredUser extends User {
 				this.setFavourites(user.getFavourites());
 			} else if (!this.getFavourites().equals(user.getFavourites())) {
 				this.setFavourites(user.getFavourites());
+			}
+		}
+		
+		if (user.getRecipes() != null) {
+			if (this.getRecipes() == null) {
+				this.setRecipes(user.getRecipes());
+			} else if (!this.getRecipes().equals(user.getRecipes())) {
+				this.setRecipes(user.getRecipes());
 			}
 		}
 	}

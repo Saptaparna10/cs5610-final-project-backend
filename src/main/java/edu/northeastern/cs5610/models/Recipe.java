@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.LazyCollection;
@@ -23,6 +24,9 @@ public class Recipe {
 	private String content;
 	private String imageUrl;
 
+	@ManyToOne
+	private RegisteredUser recipeUser;
+	
 	@OneToMany(mappedBy = "recipe")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JsonIgnore
@@ -87,11 +91,20 @@ public class Recipe {
 		this.madeFavourite = madeFavourite;
 	}
 
+	public RegisteredUser getRecipeUser() {
+		return recipeUser;
+	}
+
+	public void setRecipeUser(RegisteredUser recipeUser) {
+		this.recipeUser = recipeUser;
+	}
+
 	public void set(Recipe recipe) {
 		this.setContent(recipe.getContent() != null ? recipe.getContent() : this.getContent());
 		this.setTitle(recipe.getTitle() != null ? recipe.getTitle() : this.getTitle());
 		this.setImageUrl(recipe.getImageUrl() != null ? recipe.getImageUrl() : this.getImageUrl());
-		
+		this.setRecipeUser(recipe.getRecipeUser() != null ? recipe.getRecipeUser() : this.getRecipeUser());
+
 		if (recipe.getCommentsReceived() != null) {
 			if (this.getCommentsReceived() == null) {
 				this.setCommentsReceived(recipe.getCommentsReceived());
