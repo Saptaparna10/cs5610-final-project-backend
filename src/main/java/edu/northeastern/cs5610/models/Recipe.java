@@ -26,6 +26,15 @@ public class Recipe {
 	private String title;
 	private String content;
 	private String imageUrl;
+	
+	private String srcUrl;
+	private String srcTitle;
+	private String prepTime;
+	private String servings;
+	
+	@ElementCollection
+	List<String> ingredients;
+	
 
 //	@ManyToOne
 //	private RegisteredUser recipeUser;
@@ -55,6 +64,7 @@ public class Recipe {
 		madeFavourite=  new ArrayList<>();
 		cuisines=  new ArrayList<>();
 		lists= new ArrayList<>();
+		ingredients= new ArrayList<>();
 	}
 	
 
@@ -132,11 +142,67 @@ public class Recipe {
 		this.cuisines = cuisines;
 	}
 	
+	
+	
+	public String getSrcUrl() {
+		return srcUrl;
+	}
+
+
+	public void setSrcUrl(String srcUrl) {
+		this.srcUrl = srcUrl;
+	}
+
+
+	public String getSrcTitle() {
+		return srcTitle;
+	}
+
+
+	public void setSrcTitle(String srcTitle) {
+		this.srcTitle = srcTitle;
+	}
+
+
+	public String getPrepTime() {
+		return prepTime;
+	}
+
+
+	public void setPrepTime(String prepTime) {
+		this.prepTime = prepTime;
+	}
+
+
+	public String getServings() {
+		return servings;
+	}
+
+
+	public void setServings(String servings) {
+		this.servings = servings;
+	}
+
+
+	public List<String> getIngredients() {
+		return ingredients;
+	}
+
+
+	public void setIngredients(List<String> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+
 	public void set(Recipe recipe) {
 		this.setContent(recipe.getContent() != null ? recipe.getContent() : this.getContent());
 		this.setTitle(recipe.getTitle() != null ? recipe.getTitle() : this.getTitle());
 		this.setImageUrl(recipe.getImageUrl() != null ? recipe.getImageUrl() : this.getImageUrl());
 		//this.setRecipeUser(recipe.getRecipeUser() != null ? recipe.getRecipeUser() : this.getRecipeUser());
+		this.setSrcUrl(recipe.getSrcUrl() != null ? recipe.getSrcUrl() : this.getSrcUrl());
+		this.setServings(recipe.getServings() != null ? recipe.getServings() : this.getServings());
+		this.setPrepTime(recipe.getPrepTime() != null ? recipe.getPrepTime() : this.getPrepTime());
+		this.setSrcTitle(recipe.getSrcTitle() != null ? recipe.getSrcTitle() : this.getSrcTitle());
 
 		if (recipe.getCommentsReceived() != null) {
 			if (this.getCommentsReceived() == null) {
@@ -165,6 +231,14 @@ public class Recipe {
 				this.setLists(recipe.getLists());
 			} else if (!recipe.getLists().equals(this.getLists())) {
 				this.setLists(recipe.getLists());
+			}
+		}
+		
+		if (recipe.getIngredients()!= null) {
+			if (this.getIngredients() == null) {
+				this.setIngredients(recipe.getIngredients());
+			} else if (!recipe.getIngredients().equals(this.getIngredients())) {
+				this.setIngredients(recipe.getIngredients());
 			}
 		}
 	}
