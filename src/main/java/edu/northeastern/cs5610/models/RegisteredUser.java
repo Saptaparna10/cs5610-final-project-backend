@@ -3,7 +3,9 @@ package edu.northeastern.cs5610.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -17,13 +19,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class RegisteredUser extends User {
 	
-	@OneToMany(mappedBy = "commentingUser")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "commentingUser",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Comment> comments;
 	
-	@OneToMany(mappedBy = "user")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Favourite> favourites;
 	
@@ -32,9 +32,8 @@ public class RegisteredUser extends User {
 //	@JsonIgnore
 //	private List<Recipe> recipes;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "UserFollowModerator")
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@JsonIgnore
 	private List<Moderator> following;
 	

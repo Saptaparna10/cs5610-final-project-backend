@@ -1,6 +1,7 @@
 package edu.northeastern.cs5610.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,10 +16,10 @@ public class Comment {
 	private String content;
 
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private RegisteredUser commentingUser;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Recipe recipe;	
 	
 	

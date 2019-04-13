@@ -3,8 +3,10 @@ package edu.northeastern.cs5610.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,17 +41,15 @@ public class Recipe {
 //	@ManyToOne
 //	private RegisteredUser recipeUser;
 	
-	@OneToMany(mappedBy = "recipe")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "recipe",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Comment> commentsReceived;
 	
-	@OneToMany(mappedBy = "favrecipe")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "favrecipe",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Favourite> madeFavourite;
 	
-	@ManyToMany(mappedBy = "recipes")
+	@ManyToMany(mappedBy = "recipes",fetch = FetchType.LAZY)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<RecipeList> lists;
 	

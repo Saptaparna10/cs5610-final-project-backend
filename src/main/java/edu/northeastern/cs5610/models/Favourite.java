@@ -1,6 +1,7 @@
 package edu.northeastern.cs5610.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,10 +14,10 @@ public class Favourite {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private RegisteredUser user;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Recipe favrecipe;
 
 	public int getId() {

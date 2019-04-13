@@ -2,7 +2,9 @@ package edu.northeastern.cs5610.models;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -21,13 +23,11 @@ public class Moderator extends User {
 	// instance variables
 	private Date startDate;
 	
-	@OneToMany(mappedBy = "moderator")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "moderator",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<RecipeList> recipeLists;
 	
-	@ManyToMany(mappedBy = "following")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(mappedBy = "following",fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<RegisteredUser> followers;
 
