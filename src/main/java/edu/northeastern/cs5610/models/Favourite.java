@@ -42,5 +42,26 @@ public class Favourite {
 	public void setFavrecipe(Recipe favrecipe) {
 		this.favrecipe = favrecipe;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((favrecipe == null) ? 0 : favrecipe.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Favourite) {
+			Favourite fav = (Favourite) obj;
+			if (this.getId() == fav.getId()) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }

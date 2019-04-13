@@ -1,11 +1,11 @@
-package edu.northeastern.cs5610.services;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import edu.northeastern.cs5610.repositories.CuisineRepository;
-
-public class CuisineService {
-
-	@Autowired
-	CuisineRepository repository;
-}
+//package edu.northeastern.cs5610.services;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//
+//import edu.northeastern.cs5610.repositories.CuisineRepository;
+//
+//public class CuisineService {
+//
+//	@Autowired
+//	CuisineRepository repository;
+//}

@@ -3,6 +3,7 @@ package edu.northeastern.cs5610.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +27,8 @@ public class Recipe {
 	private String content;
 	private String imageUrl;
 
-	@ManyToOne
-	private RegisteredUser recipeUser;
+//	@ManyToOne
+//	private RegisteredUser recipeUser;
 	
 	@OneToMany(mappedBy = "recipe")
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -41,14 +42,30 @@ public class Recipe {
 	
 	@ManyToMany(mappedBy = "recipes")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Cuisine> cuisines;
+	private List<RecipeList> lists;
+	
+//	@ManyToMany(mappedBy = "recipes")
+//	@LazyCollection(LazyCollectionOption.FALSE)
+	@ElementCollection
+	private List<String> cuisines;
 	
 	
 	public Recipe() {
 		commentsReceived= new ArrayList<>();
 		madeFavourite=  new ArrayList<>();
 		cuisines=  new ArrayList<>();
+		lists= new ArrayList<>();
 	}
+	
+
+	public List<RecipeList> getLists() {
+		return lists;
+	}
+
+	public void setLists(List<RecipeList> lists) {
+		this.lists = lists;
+	}
+
 
 	public int getId() {
 		return id;
@@ -99,19 +116,19 @@ public class Recipe {
 		this.madeFavourite = madeFavourite;
 	}
 
-	public RegisteredUser getRecipeUser() {
-		return recipeUser;
-	}
+//	public RegisteredUser getRecipeUser() {
+//		return recipeUser;
+//	}
+//
+//	public void setRecipeUser(RegisteredUser recipeUser) {
+//		this.recipeUser = recipeUser;
+//	}
 
-	public void setRecipeUser(RegisteredUser recipeUser) {
-		this.recipeUser = recipeUser;
-	}
-
-	public List<Cuisine> getCuisines() {
+	public List<String> getCuisines() {
 		return cuisines;
 	}
 
-	public void setCuisines(List<Cuisine> cuisines) {
+	public void setCuisines(List<String> cuisines) {
 		this.cuisines = cuisines;
 	}
 	
@@ -119,7 +136,7 @@ public class Recipe {
 		this.setContent(recipe.getContent() != null ? recipe.getContent() : this.getContent());
 		this.setTitle(recipe.getTitle() != null ? recipe.getTitle() : this.getTitle());
 		this.setImageUrl(recipe.getImageUrl() != null ? recipe.getImageUrl() : this.getImageUrl());
-		this.setRecipeUser(recipe.getRecipeUser() != null ? recipe.getRecipeUser() : this.getRecipeUser());
+		//this.setRecipeUser(recipe.getRecipeUser() != null ? recipe.getRecipeUser() : this.getRecipeUser());
 
 		if (recipe.getCommentsReceived() != null) {
 			if (this.getCommentsReceived() == null) {
@@ -143,5 +160,23 @@ public class Recipe {
 				this.setCuisines(recipe.getCuisines());
 			}
 		}
+		if (recipe.getLists()!= null) {
+			if (this.getLists() == null) {
+				this.setLists(recipe.getLists());
+			} else if (!recipe.getLists().equals(this.getLists())) {
+				this.setLists(recipe.getLists());
+			}
+		}
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Recipe) {
+			Recipe recipe = (Recipe) obj;
+			if (this.getId() == recipe.getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

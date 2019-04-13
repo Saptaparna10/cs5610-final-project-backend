@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.LazyCollection;
@@ -25,20 +27,36 @@ public class RegisteredUser extends User {
 	@JsonIgnore
 	private List<Favourite> favourites;
 	
-	@OneToMany(mappedBy = "recipeUser")
+//	@OneToMany(mappedBy = "recipeUser")
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@JsonIgnore
+//	private List<Recipe> recipes;
+	
+	@ManyToMany
+	@JoinTable(name = "UserFollowModerator")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JsonIgnore
-	private List<Recipe> recipes;
+	private List<Moderator> following;
 	
 	
 
-	public List<Recipe> getRecipes() {
-		return recipes;
+//	public List<Recipe> getRecipes() {
+//		return recipes;
+//	}
+//
+//
+//	public void setRecipes(List<Recipe> recipes) {
+//		this.recipes = recipes;
+//	}
+
+
+	public List<Moderator> getFollowing() {
+		return following;
 	}
 
 
-	public void setRecipes(List<Recipe> recipes) {
-		this.recipes = recipes;
+	public void setFollowing(List<Moderator> following) {
+		this.following = following;
 	}
 
 
@@ -46,7 +64,7 @@ public class RegisteredUser extends User {
 		super();
 		comments= new ArrayList<>();
 		favourites= new ArrayList<>();
-		recipes= new ArrayList<>();
+		//recipes= new ArrayList<>();
 	}
 	
 	
@@ -83,12 +101,32 @@ public class RegisteredUser extends User {
 			}
 		}
 		
-		if (user.getRecipes() != null) {
-			if (this.getRecipes() == null) {
-				this.setRecipes(user.getRecipes());
-			} else if (!this.getRecipes().equals(user.getRecipes())) {
-				this.setRecipes(user.getRecipes());
+//		if (user.getRecipes() != null) {
+//			if (this.getRecipes() == null) {
+//				this.setRecipes(user.getRecipes());
+//			} else if (!this.getRecipes().equals(user.getRecipes())) {
+//				this.setRecipes(user.getRecipes());
+//			}
+//		}
+		
+		if (user.getFollowing() != null) {
+			if (this.getFollowing() == null) {
+				this.setFollowing(user.getFollowing());
+			} else if (!this.getFollowing().equals(user.getFollowing())) {
+				this.setFollowing(user.getFollowing());
 			}
 		}
+		
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof RegisteredUser) {
+			RegisteredUser ru = (RegisteredUser) obj;
+			if (this.getId() == ru.getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
