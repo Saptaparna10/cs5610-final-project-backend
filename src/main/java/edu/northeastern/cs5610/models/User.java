@@ -25,6 +25,7 @@ public class User {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
+	private String imgurl;
 	private String type;
 	
 	/**
@@ -85,6 +86,14 @@ public class User {
 		this.type = type;
 	}
 
+	public String getImgurl() {
+		return imgurl;
+	}
+
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
+	}
+
 	/**
 	 * Updates person
 	 * @param user
@@ -97,6 +106,7 @@ public class User {
 		this.setPhoneNumber(person.getPhoneNumber() != null ? person.getPhoneNumber() : this.getPhoneNumber());
 		this.setUsername(person.getUsername() != null ? person.getUsername() : this.getUsername());
 		this.setType(person.getType() != null ? person.getType() : this.getType());
+		this.setImgurl(person.getImgurl() != null ? person.getImgurl() : this.getImgurl());
 	}
 	
 	/**
