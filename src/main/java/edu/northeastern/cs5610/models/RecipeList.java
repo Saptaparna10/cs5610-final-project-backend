@@ -97,4 +97,21 @@ public class RecipeList {
 		}
 		return false;
 	}
+
+
+	public void addRecipeToRecipeList(Recipe recipe) {
+		this.recipes.add(recipe);
+		if (!recipe.getLists().contains(this)) {
+			recipe.getLists().add(this);
+		}		
+	}
+
+
+	public void removeRecipeFromRecipeList(Recipe recipe) {
+		this.recipes.remove(recipe);
+		if (recipe.getLists().contains(this)) {
+			recipe.getLists().remove(this);
+		}
+		
+	}
 }
