@@ -25,17 +25,17 @@ public class Recipe {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String title;
-	private String content;
-	private String imageUrl;
+	private String name;
+//	private String content;
+	private String images;
 	
-	private String srcUrl;
-	private String srcTitle;
-	private String prepTime;
-	private String servings;
+	private String sourceRecipeUrl;
+	private String sourceDisplayName;
+	private String totalTime;
+	private String numberOfServings;
 	
 	@ElementCollection
-	List<String> ingredients;
+	List<String> ingredientLines;
 	
 
 //	@ManyToOne
@@ -64,145 +64,162 @@ public class Recipe {
 		madeFavourite=  new ArrayList<>();
 		cuisines=  new ArrayList<>();
 		lists= new ArrayList<>();
-		ingredients= new ArrayList<>();
+		ingredientLines= new ArrayList<>();
 	}
 	
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public String getImages() {
+		return images;
+	}
+
+
+
+	public void setImages(String images) {
+		this.images = images;
+	}
+
+
+
+	public String getSourceRecipeUrl() {
+		return sourceRecipeUrl;
+	}
+
+
+
+	public void setSourceRecipeUrl(String sourceRecipeUrl) {
+		this.sourceRecipeUrl = sourceRecipeUrl;
+	}
+
+
+
+	public String getSourceDisplayName() {
+		return sourceDisplayName;
+	}
+
+
+
+	public void setSourceDisplayName(String sourceDisplayName) {
+		this.sourceDisplayName = sourceDisplayName;
+	}
+
+
+
+	public String getTotalTime() {
+		return totalTime;
+	}
+
+
+
+	public void setTotalTime(String totalTime) {
+		this.totalTime = totalTime;
+	}
+
+
+
+	public String getNumberOfServings() {
+		return numberOfServings;
+	}
+
+
+
+	public void setNumberOfServings(String numberOfServings) {
+		this.numberOfServings = numberOfServings;
+	}
+
+
+
+	public List<String> getIngredientLines() {
+		return ingredientLines;
+	}
+
+
+
+	public void setIngredientLines(List<String> ingredientLines) {
+		this.ingredientLines = ingredientLines;
+	}
+
+
+
+	public List<Comment> getCommentsReceived() {
+		return commentsReceived;
+	}
+
+
+
+	public void setCommentsReceived(List<Comment> commentsReceived) {
+		this.commentsReceived = commentsReceived;
+	}
+
+
+
+	public List<Favourite> getMadeFavourite() {
+		return madeFavourite;
+	}
+
+
+
+	public void setMadeFavourite(List<Favourite> madeFavourite) {
+		this.madeFavourite = madeFavourite;
+	}
+
+
 
 	public List<RecipeList> getLists() {
 		return lists;
 	}
+
+
 
 	public void setLists(List<RecipeList> lists) {
 		this.lists = lists;
 	}
 
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	public List<Comment> getCommentsReceived() {
-		return commentsReceived;
-	}
-
-	public void setCommentsReceived(List<Comment> commentsReceived) {
-		this.commentsReceived = commentsReceived;
-	}
-	
-	
-	public List<Favourite> getMadeFavourite() {
-		return madeFavourite;
-	}
-
-	public void setMadeFavourite(List<Favourite> madeFavourite) {
-		this.madeFavourite = madeFavourite;
-	}
-
-//	public RegisteredUser getRecipeUser() {
-//		return recipeUser;
-//	}
-//
-//	public void setRecipeUser(RegisteredUser recipeUser) {
-//		this.recipeUser = recipeUser;
-//	}
 
 	public List<String> getCuisines() {
 		return cuisines;
 	}
 
+
+
 	public void setCuisines(List<String> cuisines) {
 		this.cuisines = cuisines;
 	}
-	
-	
-	
-	public String getSrcUrl() {
-		return srcUrl;
-	}
 
-
-	public void setSrcUrl(String srcUrl) {
-		this.srcUrl = srcUrl;
-	}
-
-
-	public String getSrcTitle() {
-		return srcTitle;
-	}
-
-
-	public void setSrcTitle(String srcTitle) {
-		this.srcTitle = srcTitle;
-	}
-
-
-	public String getPrepTime() {
-		return prepTime;
-	}
-
-
-	public void setPrepTime(String prepTime) {
-		this.prepTime = prepTime;
-	}
-
-
-	public String getServings() {
-		return servings;
-	}
-
-
-	public void setServings(String servings) {
-		this.servings = servings;
-	}
-
-
-	public List<String> getIngredients() {
-		return ingredients;
-	}
-
-
-	public void setIngredients(List<String> ingredients) {
-		this.ingredients = ingredients;
-	}
 
 
 	public void set(Recipe recipe) {
-		this.setContent(recipe.getContent() != null ? recipe.getContent() : this.getContent());
-		this.setTitle(recipe.getTitle() != null ? recipe.getTitle() : this.getTitle());
-		this.setImageUrl(recipe.getImageUrl() != null ? recipe.getImageUrl() : this.getImageUrl());
+		this.setName(recipe.getName() != null ? recipe.getName() : this.getName());
+		this.setImages(recipe.getImages() != null ? recipe.getImages() : this.getImages());
 		//this.setRecipeUser(recipe.getRecipeUser() != null ? recipe.getRecipeUser() : this.getRecipeUser());
-		this.setSrcUrl(recipe.getSrcUrl() != null ? recipe.getSrcUrl() : this.getSrcUrl());
-		this.setServings(recipe.getServings() != null ? recipe.getServings() : this.getServings());
-		this.setPrepTime(recipe.getPrepTime() != null ? recipe.getPrepTime() : this.getPrepTime());
-		this.setSrcTitle(recipe.getSrcTitle() != null ? recipe.getSrcTitle() : this.getSrcTitle());
+		this.setSourceRecipeUrl(recipe.getSourceRecipeUrl() != null ? recipe.getSourceRecipeUrl() : this.getSourceRecipeUrl());
+		this.setSourceDisplayName(recipe.getSourceDisplayName() != null ? recipe.getSourceDisplayName() : this.getSourceDisplayName());
+		this.setTotalTime(recipe.getTotalTime() != null ? recipe.getTotalTime() : this.getTotalTime());
+		this.setNumberOfServings(recipe.getNumberOfServings() != null ? recipe.getNumberOfServings() : this.getNumberOfServings());
 
 		if (recipe.getCommentsReceived() != null) {
 			if (this.getCommentsReceived() == null) {
@@ -234,11 +251,11 @@ public class Recipe {
 			}
 		}
 		
-		if (recipe.getIngredients()!= null) {
-			if (this.getIngredients() == null) {
-				this.setIngredients(recipe.getIngredients());
-			} else if (!recipe.getIngredients().equals(this.getIngredients())) {
-				this.setIngredients(recipe.getIngredients());
+		if (recipe.getIngredientLines()!= null) {
+			if (this.getIngredientLines() == null) {
+				this.setIngredientLines(recipe.getIngredientLines());
+			} else if (!recipe.getIngredientLines().equals(this.getIngredientLines())) {
+				this.setIngredientLines(recipe.getIngredientLines());
 			}
 		}
 	}
