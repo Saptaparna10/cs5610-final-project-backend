@@ -128,4 +128,18 @@ public class RegisteredUser extends User {
 		}
 		return false;
 	}
+	
+	public void addModeratorToFollowing(Moderator mod) {
+		this.following.add(mod);
+		if (!mod.getFollowers().contains(this)) {
+			mod.getFollowers().add(this);
+		}
+	}
+	
+	public void removeModeratorFromFollowing(Moderator mod) {
+		this.following.remove(mod);
+		if (mod.getFollowers().contains(this)) {
+			mod.getFollowers().remove(this);
+		}
+	}
 }

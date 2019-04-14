@@ -1,12 +1,77 @@
 package edu.northeastern.cs5610.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.northeastern.cs5610.models.Moderator;
+import edu.northeastern.cs5610.models.RegisteredUser;
 import edu.northeastern.cs5610.repositories.*;
 
+@RestController
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", allowedHeaders = "*")
 public class RegisteredUserService {
 
 	@Autowired
 	RegisteredUserRepository repository;
 	
+	@Autowired
+	ModeratorService modService;
+	
+	@GetMapping("/api/registereduser/{id}")
+	public RegisteredUser findRegisteredUserById(@PathVariable("id") int id) {
+		Optional<RegisteredUser> registeredUser =  repository.findById(id);
+		if(registeredUser != null) {
+			return registeredUser.get();
+		}
+		else {
+			return null;
+		}
+	}
+	
+
+	@PutMapping("/api/registereduser/{id}")
+	public RegisteredUser updateRegisteredUser(@PathVariable("id") int id, @RequestBody RegisteredUser user) {
+		RegisteredUser prevUser = findRegisteredUserById(id);
+		prevUser.set(user);
+		return repository.save(prevUser);
+	}
+	
+	@PutMapping("/api/registereduser/follow/{userid}/{moderatorId}")
+	public RegisteredUser followModerator(@PathVariable("userid") int userid, @PathVariable("moderatorId") int moderatorId) {
+		RegisteredUser user = findRegisteredUserById(userid);
+		Moderator mod = modService.findModeratorById(moderatorId);
+		
+		user.addModeratorToFollowing(mod);
+		modService.updateModerator(moderatorId, mod);
+		return updateRegisteredUser(userid, user);
+		
+	}
+	
+	@DeleteMapping("/api/registereduser/follow/{userid}/{moderatorId}")
+	public RegisteredUser unfollowModerator(@PathVariable("userid") int userid, @PathVariable("moderatorId") int moderatorId) {
+		RegisteredUser user = findRegisteredUserById(userid);
+		Moderator mod = modService.findModeratorById(moderatorId);
+		
+		user.removeModeratorFromFollowing(mod);
+		modService.updateModerator(moderatorId, mod);
+		return updateRegisteredUser(userid, user);
+	}
+	
+	@GetMapping("/api/registereduser/{id}/following")
+	public List<Moderator> getModeratorsFollowing(@PathVariable ("id") int id){
+		RegisteredUser user = findRegisteredUserById(id);
+		if(user != null) {
+			return user.getFollowing();
+		}
+		return null;
+	}
 }

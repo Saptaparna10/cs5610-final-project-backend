@@ -1,10 +1,58 @@
 package edu.northeastern.cs5610.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.northeastern.cs5610.models.Moderator;
+import edu.northeastern.cs5610.models.RecipeList;
+import edu.northeastern.cs5610.models.RegisteredUser;
+import edu.northeastern.cs5610.models.User;
 import edu.northeastern.cs5610.repositories.*;
 
+@RestController
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", allowedHeaders = "*")
 public class ModeratorService {
+	
 	@Autowired
 	ModeratorRepository repository;
+	
+	@GetMapping("/api/moderator/{id}")
+	public Moderator findModeratorById(@PathVariable("id") int id) {
+		Optional<Moderator> moderator =  repository.findById(id);
+		if(moderator != null) {
+			return moderator.get();
+		}
+		else {
+			return null;
+		}
+	}
+	
+	@PutMapping("/api/moderator/{id}")
+	public Moderator updateModerator(@PathVariable("id") int id, @RequestBody Moderator user) {
+		Moderator prevUser = findModeratorById(id);
+		prevUser.set(user);
+		return repository.save(prevUser);
+	}
+	
+	@GetMapping("/api/moderator/{id}/recipelists")
+	public List<RecipeList> getAllPlaylists(@PathVariable ("id") int id) {
+		Moderator mod = findModeratorById(id);
+		if(mod != null) {
+			return mod.getRecipeLists();
+		}
+		return null;
+	}
+	
+	@GetMapping("/api/moderator/registereduser/follower/{id}")
+	public List<RegisteredUser> findAllFollowerRegUsers(@PathVariable("id") int id){
+		return findModeratorById(id).getFollowers();
+	}
 }

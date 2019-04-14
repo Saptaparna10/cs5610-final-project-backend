@@ -24,7 +24,7 @@ public class RecipeListService {
 	private RecipeService recipeService;
 	
 	@Autowired
-	private UserService userService;
+	private ModeratorService modService;
 	
 
 	@PostMapping("/api/recipelist")
@@ -42,10 +42,10 @@ public class RecipeListService {
 //			}
 //		}
 		Moderator owner = recipeList.getModerator();
-		owner = (Moderator) userService.findUserById(owner.getId());
+		owner =  modService.findModeratorById(owner.getId());
 		if(owner != null) {
 			owner.getRecipeLists().add(recipeList);
-			userService.updateUser(owner.getId(), owner);
+			modService.updateModerator(owner.getId(), owner);
 		}
 		return recipeList;
 		
@@ -127,7 +127,7 @@ public class RecipeListService {
 		Moderator owner = recipelist.getModerator();
 		if(owner != null) {
 			owner.getRecipeLists().remove(recipelist);
-			userService.updateUser(owner.getId(), owner);
+			modService.updateModerator(owner.getId(), owner);
 		}
 		
 		repository.deleteById(id);
