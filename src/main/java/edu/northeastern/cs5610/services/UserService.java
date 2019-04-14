@@ -17,7 +17,6 @@ import edu.northeastern.cs5610.models.User;
 import edu.northeastern.cs5610.repositories.*;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200/", allowCredentials="true") 
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", allowedHeaders = "*")
 public class UserService {
 
