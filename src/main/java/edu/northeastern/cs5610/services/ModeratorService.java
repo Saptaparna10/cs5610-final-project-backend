@@ -40,8 +40,7 @@ public class ModeratorService {
 		}
 		return repository.save(newUser);
 	}
-		
-	
+
 	@GetMapping("/api/moderator/{id}")
 	public Moderator findModeratorById(@PathVariable("id") int id) {
 		Optional<Moderator> moderator =  repository.findById(id);

@@ -30,6 +30,7 @@ public class RegisteredUserService {
 	@Autowired
 	ModeratorService modService;
 	
+
 	@PostMapping("/api/registeredUser/register")
 	public User register(@RequestBody RegisteredUser newUser,
 			HttpSession session) {
