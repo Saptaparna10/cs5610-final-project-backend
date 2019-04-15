@@ -17,5 +17,5 @@ public interface CommentRepository extends CrudRepository<Comment, Integer>{
 	Iterable<Comment> findCommentsByUserForRecipe(@Param("user") RegisteredUser user, @Param("recipe") Recipe recipe);
 
 	@Query("SELECT r FROM Comment r WHERE r.recipe=:recipe")
-	Iterable<Comment> findAllCommentsForSong(@Param("recipe") Recipe recipe);
+	Iterable<Comment> findAllCommentsForRecipe(@Param("recipe") Recipe recipe);
 }
