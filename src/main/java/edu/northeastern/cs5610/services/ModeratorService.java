@@ -27,13 +27,20 @@ public class ModeratorService {
 	@Autowired
 	ModeratorRepository repository;
 	
-	@PostMapping("/api/Moderator/register")
+	@PostMapping("/api/moderator/register")
 	public User register(@RequestBody Moderator newUser,
 			HttpSession session) {
 		
+		List<Moderator> users= (List<Moderator>) repository.findAll();
+		
+		for (User user : users) {
+			if(user.getUsername().equals(newUser.getUsername())) {
+				return null;
+			}
+		}
 		return repository.save(newUser);
 	}
-	
+		
 	
 	@GetMapping("/api/moderator/{id}")
 	public Moderator findModeratorById(@PathVariable("id") int id) {

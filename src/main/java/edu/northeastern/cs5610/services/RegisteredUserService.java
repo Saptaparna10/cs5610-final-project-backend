@@ -30,10 +30,17 @@ public class RegisteredUserService {
 	@Autowired
 	ModeratorService modService;
 	
-	@PostMapping("/api/RegisteredUser/register")
+	@PostMapping("/api/registeredUser/register")
 	public User register(@RequestBody RegisteredUser newUser,
 			HttpSession session) {
 		
+		List<RegisteredUser> users= (List<RegisteredUser>) repository.findAll();
+		
+		for (User user : users) {
+			if(user.getUsername().equals(newUser.getUsername())) {
+				return null;
+			}
+		}
 		return repository.save(newUser);
 	}
 	
