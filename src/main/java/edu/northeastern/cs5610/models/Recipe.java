@@ -41,7 +41,7 @@ public class Recipe {
 //	@ManyToOne
 //	private RegisteredUser recipeUser;
 	
-	@OneToMany(mappedBy = "recipe",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "recipe",cascade=CascadeType.ALL,orphanRemoval=true)
 	@JsonIgnore
 	private List<Comment> commentsReceived;
 	

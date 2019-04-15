@@ -26,7 +26,7 @@ public class User {
 	private String email;
 	private String phoneNumber;
 	private String imgurl;
-	private String type;
+	//private String type;
 	
 	/**
 	 * Represents the default constructor
@@ -78,13 +78,13 @@ public class User {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+//	public String getType() {
+//		return type;
+//	}
+//
+//	public void setType(String type) {
+//		this.type = type;
+//	}
 
 	public String getImgurl() {
 		return imgurl;
@@ -105,7 +105,7 @@ public class User {
 		this.setPassword(person.getPassword() != null ? person.getPassword() : this.getPassword());
 		this.setPhoneNumber(person.getPhoneNumber() != null ? person.getPhoneNumber() : this.getPhoneNumber());
 		this.setUsername(person.getUsername() != null ? person.getUsername() : this.getUsername());
-		this.setType(person.getType() != null ? person.getType() : this.getType());
+		//this.setType(person.getType() != null ? person.getType() : this.getType());
 		this.setImgurl(person.getImgurl() != null ? person.getImgurl() : this.getImgurl());
 	}
 	

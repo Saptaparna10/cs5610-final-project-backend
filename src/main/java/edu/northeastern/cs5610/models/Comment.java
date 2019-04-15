@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Comment {
 	@Id
@@ -16,10 +18,12 @@ public class Comment {
 	private String content;
 
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JsonIgnore
 	private RegisteredUser commentingUser;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JsonIgnore
 	private Recipe recipe;	
 	
 	

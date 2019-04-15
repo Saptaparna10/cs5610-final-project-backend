@@ -26,11 +26,15 @@ public class CommentService {
 	RegisteredUserService regUserService;
 	
 	@Autowired
+	UserService userService;
+	
+	@Autowired
 	RecipeService recipeService;
 	
 	@PostMapping("/api/comment/user/{userId}/recipe/{recipeId}")
 	public Comment createComment(@PathVariable("userId") int userId, @PathVariable("recipeId") int recipeId, @RequestBody Comment comment) {
 		RegisteredUser user = regUserService.findRegisteredUserById(userId);
+		//User user = userService.findUserById(userId);
 		Recipe recipe = recipeService.findRecipeById(recipeId);
 		
 		comment.setUser(user);

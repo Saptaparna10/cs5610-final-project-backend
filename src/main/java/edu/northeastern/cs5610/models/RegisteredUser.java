@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -19,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class RegisteredUser extends User {
 	
-	@OneToMany(mappedBy = "commentingUser",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "commentingUser",cascade=CascadeType.ALL,orphanRemoval=true)
 	@JsonIgnore
 	private List<Comment> comments;
 	
