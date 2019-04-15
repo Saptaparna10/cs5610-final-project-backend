@@ -25,7 +25,7 @@ public class RegisteredUser extends User {
 	@JsonIgnore
 	private List<Comment> comments;
 	
-	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user",cascade=CascadeType.ALL,orphanRemoval=true)
 	@JsonIgnore
 	private List<Favourite> favourites;
 	

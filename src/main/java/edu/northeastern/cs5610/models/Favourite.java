@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Favourite {
 	
@@ -14,10 +16,12 @@ public class Favourite {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JsonIgnore
 	private RegisteredUser user;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JsonIgnore
 	private Recipe favrecipe;
 
 	public int getId() {

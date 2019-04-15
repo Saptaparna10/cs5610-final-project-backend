@@ -45,7 +45,7 @@ public class Recipe {
 	@JsonIgnore
 	private List<Comment> commentsReceived;
 	
-	@OneToMany(mappedBy = "favrecipe",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "favrecipe",cascade=CascadeType.ALL,orphanRemoval=true)
 	@JsonIgnore
 	private List<Favourite> madeFavourite;
 	
