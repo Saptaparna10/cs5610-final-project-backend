@@ -15,6 +15,6 @@ public interface FavouriteRepository extends CrudRepository<Favourite, Integer>{
 	Iterable<Favourite> findFavoritesByUser(@Param("user") RegisteredUser user);
 	
 	@Query("SELECT r FROM Favourite r WHERE r.user=:user AND r.favrecipe=:recipe")
-	Iterable<Favourite> recipeService(@Param("user") RegisteredUser user, @Param("recipe") Recipe recipe);
+	Iterable<Favourite> findFavoritesForRecipebyUser(@Param("user") RegisteredUser user, @Param("recipe") Recipe recipe);
 
 }
