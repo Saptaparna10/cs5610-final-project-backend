@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.northeastern.cs5610.models.Comment;
 import edu.northeastern.cs5610.models.Favourite;
 import edu.northeastern.cs5610.models.Recipe;
 import edu.northeastern.cs5610.models.RegisteredUser;
@@ -27,9 +28,21 @@ public class FavouriteService {
 	@Autowired
 	RecipeService recipeService;
 	
-	@PostMapping("/api/favorite")
-	public Favourite createFavourite(@RequestBody Favourite fav) {
-		return repository.save(fav);
+	@PostMapping("/api/favorite/user/{userId}/recipe/{recipeId}")
+	public Favourite createFavourite(@PathVariable("userId") int userId, @PathVariable("recipeId") int recipeId, @RequestBody Favourite fav) {
+		RegisteredUser user = regUserService.findRegisteredUserById(userId);
+		//User user = userService.findUserById(userId);
+		Recipe recipe = recipeService.findRecipeById(recipeId);
+		
+		fav.setUser(user);
+		fav.setFavrecipe(recipe);
+		
+		fav = repository.save(fav);
+		recipe.getMadeFavourite().add(fav);
+		
+		recipeService.updateRecipe(recipeId, recipe);
+		regUserService.updateRegisteredUser(userId, user);
+		return fav;
 	}
 	
 	@GetMapping("/api/favorite/recipe/{id}")
