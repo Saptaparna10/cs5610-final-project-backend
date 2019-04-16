@@ -88,4 +88,17 @@ public class FavouriteService {
 			return null;
 		}
 	}
+	
+	@GetMapping("/api/favorite/user/{userId}/recipe/{recipeId}")
+	public Iterable<Favourite> findFavoritesForRecipebyUser(@PathVariable("userId") int userId, @PathVariable("recipeId") int recipeId) {
+		Recipe recipe= recipeService.findRecipeById(recipeId);
+		Iterable<Favourite> favs=  repository.findFavoritesForRecipe(recipe);
+		if(favs != null) {
+			return favs;
+		}
+		else {
+			return null;
+		}
+	}
+	
 }
