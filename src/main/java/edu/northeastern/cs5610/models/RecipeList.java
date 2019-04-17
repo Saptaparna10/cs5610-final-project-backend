@@ -82,6 +82,24 @@ public class RecipeList {
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
 	}
+	
+
+
+	public void addRecipeToRecipeList(Recipe recipe) {
+		this.recipes.add(recipe);
+		if (!recipe.getLists().contains(this)) {
+			recipe.getLists().add(this);
+		}		
+	}
+
+
+	public void removeRecipeFromRecipeList(Recipe recipe) {
+		this.recipes.remove(recipe);
+		if (recipe.getLists().contains(this)) {
+			recipe.getLists().remove(this);
+		}
+		
+	}
 
 
 	public void set(RecipeList list) {
@@ -99,6 +117,7 @@ public class RecipeList {
 		}
 		
 	}
+
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -109,22 +128,5 @@ public class RecipeList {
 			}
 		}
 		return false;
-	}
-
-
-	public void addRecipeToRecipeList(Recipe recipe) {
-		this.recipes.add(recipe);
-		if (!recipe.getLists().contains(this)) {
-			recipe.getLists().add(this);
-		}		
-	}
-
-
-	public void removeRecipeFromRecipeList(Recipe recipe) {
-		this.recipes.remove(recipe);
-		if (recipe.getLists().contains(this)) {
-			recipe.getLists().remove(this);
-		}
-		
 	}
 }
