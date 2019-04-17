@@ -25,8 +25,10 @@ public class RecipeList {
 	private int id;
 	
 	private String name;
+	private String imageURL;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Moderator moderator;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -72,9 +74,20 @@ public class RecipeList {
 		this.recipes = recipes;
 	}
 
+	public String getImageURL() {
+		return imageURL;
+	}
+
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+
 	public void set(RecipeList list) {
 
 		this.setName(list.getName() != null ? list.getName() : this.getName());
+		this.setImageURL(list.getImageURL() != null ? list.getImageURL() : this.getImageURL());
 		this.setModerator(list.getModerator() != null ? list.getModerator() : this.getModerator());
 		
 		if (list.getRecipes() != null) {

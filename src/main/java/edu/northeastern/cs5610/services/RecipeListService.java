@@ -30,30 +30,17 @@ public class RecipeListService {
 	private ModeratorService modService;
 	
 
-	@PostMapping("/api/recipelist")
-	public RecipeList createRecipeList(@RequestBody RecipeList recipeList) {
+	@PostMapping("/api/recipelist/{modId}")
+	public RecipeList createRecipeList(@PathVariable("modId") int modId, @RequestBody RecipeList recipeList) {
 		recipeList = repository.save(recipeList);
-		
-//		List<Recipe> recipes = recipeList.getRecipes();
-//		if(recipes != null && !recipes.isEmpty()) {
-//			for(Recipe recipe: recipes) {
-//				Recipe temp = recipeService.findRecipeByName(recipe.getName());
-//				if(temp == null) {
-//					temp = recipeService.createRecipe(recipe);
-//				}
-//				temp.getLists().add(recipeList);
-//				recipeService.updateRecipe(temp.getId(), temp);
-//			}
-//		}
-		
-		Moderator owner = recipeList.getModerator();
-		
-		owner =  modService.findModeratorById(owner.getId());
-		
+
+		Moderator owner = modService.findModeratorById(modId);
+				
 		if(owner == null)
 			return null;
 		
 		if(owner != null) {
+			recipeList.setModerator(owner);
 			owner.getRecipeLists().add(recipeList);
 			modService.updateModerator(owner.getId(), owner);
 		}
