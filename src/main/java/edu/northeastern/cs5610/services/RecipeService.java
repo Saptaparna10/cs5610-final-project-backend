@@ -33,7 +33,7 @@ public class RecipeService {
 	@GetMapping("/api/recipe/{id}")
 	public Recipe findRecipeById(@PathVariable("id") String id) {
 		Optional<Recipe> recipe =  repository.findById(id);
-		if(recipe != null) {
+		if(recipe.isPresent()) {
 			return recipe.get();
 		}
 		else {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Recipe {
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id",unique=true,columnDefinition="VARCHAR(64)")
 	private String id;
 	private String name;
 //	private String content;
