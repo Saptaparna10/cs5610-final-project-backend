@@ -80,6 +80,8 @@ public class FavouriteService {
 	
 	@GetMapping("/api/favorite/user/{id}")
 	public Iterable<Favourite> findFavoritesByUser(@PathVariable("id") int id) {
+		if(id==0)
+			return null;
 		RegisteredUser user= regUserService.findRegisteredUserById(id);
 
 		Iterable<Favourite>  favs=  repository.findFavoritesByUser(user);
