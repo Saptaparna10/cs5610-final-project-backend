@@ -31,7 +31,7 @@ public class RecipeService {
 	}
 	
 	@GetMapping("/api/recipe/{id}")
-	public Recipe findRecipeById(@PathVariable("id") int id) {
+	public Recipe findRecipeById(@PathVariable("id") String id) {
 		Optional<Recipe> recipe =  repository.findById(id);
 		if(recipe != null) {
 			return recipe.get();
@@ -47,7 +47,7 @@ public class RecipeService {
 	}
 	
 	@PutMapping("api/recipe/{id}")
-	public Recipe updateRecipe(@PathVariable("id") int id, @RequestBody Recipe recipe) {
+	public Recipe updateRecipe(@PathVariable("id") String id, @RequestBody Recipe recipe) {
 		Recipe prev = findRecipeById(id);
 		prev.set(recipe);
 		return repository.save(prev);
@@ -64,7 +64,7 @@ public class RecipeService {
 	}
 	
 	@DeleteMapping("/api/recipe/{id}")
-	public void deleteRecipe(@PathVariable("id") int id) {
+	public void deleteRecipe(@PathVariable("id") String id) {
 		
 		repository.deleteById(id);
 		

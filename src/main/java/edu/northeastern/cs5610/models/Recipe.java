@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Recipe {
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private String id;
 	private String name;
 //	private String content;
 	private String images;
@@ -68,13 +68,13 @@ public class Recipe {
 	}
 	
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
 
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -264,7 +264,7 @@ public class Recipe {
 	public boolean equals(Object obj) {
 		if (obj instanceof Recipe) {
 			Recipe recipe = (Recipe) obj;
-			if (this.getId() == recipe.getId()) {
+			if (this.getId().equals(recipe.getId())) {
 				return true;
 			}
 		}

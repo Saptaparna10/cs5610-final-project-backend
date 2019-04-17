@@ -71,7 +71,7 @@ public class RecipeListService {
 	}
 
 	@PutMapping("/api/recipelist/{recipelistId}/recipe/{recipeId}")
-	public RecipeList addRecipeToRecipeList(@PathVariable("recipelistId") int recipelistId, @PathVariable("recipeId") int recipeId) {
+	public RecipeList addRecipeToRecipeList(@PathVariable("recipelistId") int recipelistId, @PathVariable("recipeId") String recipeId) {
 		
 		RecipeList recipelist = repository.findById(recipelistId).get();
 		Recipe recipe = recipeService.findRecipeById(recipeId);
@@ -86,7 +86,7 @@ public class RecipeListService {
 	
 
 	@DeleteMapping("/api/recipelist/{recipelistId}/recipe/{recipeId}")
-	public RecipeList removeRecipeFromRecipeList(@PathVariable("recipelistId") int recipelistId, @PathVariable("recipeId") int recipeId) {
+	public RecipeList removeRecipeFromRecipeList(@PathVariable("recipelistId") int recipelistId, @PathVariable("recipeId") String recipeId) {
 		
 		RecipeList recipeList = repository.findById(recipelistId).get();
 		Recipe recipe = recipeService.findRecipeById(recipeId);

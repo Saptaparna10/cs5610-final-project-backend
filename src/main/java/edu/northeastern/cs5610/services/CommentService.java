@@ -32,7 +32,7 @@ public class CommentService {
 	RecipeService recipeService;
 	
 	@PostMapping("/api/comment/user/{userId}/recipe/{recipeId}")
-	public Comment createComment(@PathVariable("userId") int userId, @PathVariable("recipeId") int recipeId, @RequestBody Comment comment) {
+	public Comment createComment(@PathVariable("userId") int userId, @PathVariable("recipeId") String recipeId, @RequestBody Comment comment) {
 		RegisteredUser user = regUserService.findRegisteredUserById(userId);
 		//User user = userService.findUserById(userId);
 		Recipe recipe = recipeService.findRecipeById(recipeId);
@@ -60,13 +60,13 @@ public class CommentService {
 	}
 	
 	@GetMapping("/api/comment/user/{userId}/recipe/{recipeId}")
-	public List<Comment> findCommentsByUserForRecipe(@PathVariable("userId") int userId, @PathVariable("recipeId") int recipeId) {
+	public List<Comment> findCommentsByUserForRecipe(@PathVariable("userId") int userId, @PathVariable("recipeId") String recipeId) {
 		
 		return (List<Comment>) repository.findCommentsByUserForRecipe(regUserService.findRegisteredUserById(userId), recipeService.findRecipeById(recipeId));
 	}
 	
 	@GetMapping("/api/comment/recipe/{recipeId}")
-	public List<Comment> findAllCommentsForRecipe(@PathVariable("recipeId") int recipeId){
+	public List<Comment> findAllCommentsForRecipe(@PathVariable("recipeId") String recipeId){
 		
 		return (List<Comment>) repository.findAllCommentsForRecipe(recipeService.findRecipeById(recipeId));
 	}

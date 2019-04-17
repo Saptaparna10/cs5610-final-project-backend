@@ -30,7 +30,7 @@ public class FavouriteService {
 	RecipeService recipeService;
 	
 	@PostMapping("/api/favorite/user/{userId}/recipe/{recipeId}")
-	public Favourite createFavourite(@PathVariable("userId") int userId, @PathVariable("recipeId") int recipeId, @RequestBody Favourite fav) {
+	public Favourite createFavourite(@PathVariable("userId") int userId, @PathVariable("recipeId") String recipeId, @RequestBody Favourite fav) {
 		RegisteredUser user = regUserService.findRegisteredUserById(userId);
 		//User user = userService.findUserById(userId);
 		Recipe recipe = recipeService.findRecipeById(recipeId);
@@ -65,7 +65,7 @@ public class FavouriteService {
 	}
 	
 	@GetMapping("/api/favorite/recipe/{id}")
-	public Iterable<Favourite> findFavoritesForRecipe(@PathVariable("id") int id) {
+	public Iterable<Favourite> findFavoritesForRecipe(@PathVariable("id") String id) {
 		Recipe recipe= recipeService.findRecipeById(id);
 		Iterable<Favourite> favs=  repository.findFavoritesForRecipe(recipe);
 		if(favs != null) {
@@ -90,7 +90,7 @@ public class FavouriteService {
 	}
 	
 	@GetMapping("/api/favorite/user/{userId}/recipe/{recipeId}")
-	public Iterable<Favourite> findFavoritesForRecipebyUser(@PathVariable("userId") int userId, @PathVariable("recipeId") int recipeId) {
+	public Iterable<Favourite> findFavoritesForRecipebyUser(@PathVariable("userId") int userId, @PathVariable("recipeId") String recipeId) {
 		
 		RegisteredUser user= regUserService.findRegisteredUserById(userId);
 		Recipe recipe= recipeService.findRecipeById(recipeId);

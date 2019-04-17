@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import edu.northeastern.cs5610.models.*;
 
-public interface RecipeRepository extends CrudRepository<Recipe, Integer>{
+public interface RecipeRepository extends CrudRepository<Recipe, String>{
 
 	@Query("SELECT s FROM Recipe s WHERE s.name=:name")
 	Iterable<Recipe> findRecipeByName(@Param("name") String name);
