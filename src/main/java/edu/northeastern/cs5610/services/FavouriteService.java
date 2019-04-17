@@ -35,6 +35,9 @@ public class FavouriteService {
 		//User user = userService.findUserById(userId);
 		Recipe recipe = recipeService.findRecipeById(recipeId);
 		
+		if(user == null || recipe == null)
+			return null;
+		
 		fav.setUser(user);
 		fav.setFavrecipe(recipe);
 		
@@ -50,6 +53,10 @@ public class FavouriteService {
 	public void deleteFavorite(@PathVariable("id") int id) {
 		
 		Favourite fav = findFavoritetById(id);
+		
+		if(fav == null)
+			return;
+		
 		fav.getUser().getFavourites().remove(fav);
 		fav.getFavrecipe().getCommentsReceived().remove(fav);
 		
@@ -61,7 +68,11 @@ public class FavouriteService {
 	
 	@GetMapping("/api/favorite/{id}")
 	public Favourite findFavoritetById(@PathVariable("id") int id) {
-		return repository.findById(id).get();
+		Optional<Favourite> opt = repository.findById(id);
+		
+		if(opt.isPresent())
+			return opt.get();
+		return null;
 	}
 	
 	@GetMapping("/api/favorite/recipe/{id}")
@@ -83,6 +94,9 @@ public class FavouriteService {
 		if(id==0)
 			return null;
 		RegisteredUser user= regUserService.findRegisteredUserById(id);
+		
+		if(user == null)
+			return null;
 
 		Iterable<Favourite>  favs=  repository.findFavoritesByUser(user);
 		if(favs != null) {
@@ -100,6 +114,10 @@ public class FavouriteService {
 		
 		RegisteredUser user= regUserService.findRegisteredUserById(userId);
 		Recipe recipe= recipeService.findRecipeById(recipeId);
+		
+		if(user == null || recipe == null)
+			return null;
+		
 		Iterable<Favourite> favs=  repository.findFavoritesForRecipebyUser(user,recipe);
 		if(favs != null) {
 			return favs;

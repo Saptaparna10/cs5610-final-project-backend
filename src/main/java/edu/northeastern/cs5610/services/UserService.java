@@ -82,6 +82,8 @@ public class UserService {
 	@PutMapping("/api/user/{id}")
 	public User updateUser(@PathVariable("id") int id, @RequestBody User user) {
 		User prevUser = findUserById(id);
+		if(prevUser == null)
+			return null;
 		prevUser.set(user);
 		return repository.save(prevUser);
 	}

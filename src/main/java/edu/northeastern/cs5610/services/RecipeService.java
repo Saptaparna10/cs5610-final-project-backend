@@ -27,6 +27,8 @@ public class RecipeService {
 	@PostMapping("/api/recipe")
 	public Recipe createRecipe(@RequestBody Recipe recipe) {
 
+		if(recipe == null)
+			return null;
 		return repository.save(recipe);
 	}
 	
@@ -49,6 +51,8 @@ public class RecipeService {
 	@PutMapping("api/recipe/{id}")
 	public Recipe updateRecipe(@PathVariable("id") String id, @RequestBody Recipe recipe) {
 		Recipe prev = findRecipeById(id);
+		if(prev == null)
+			return null;
 		prev.set(recipe);
 		return repository.save(prev);
 		

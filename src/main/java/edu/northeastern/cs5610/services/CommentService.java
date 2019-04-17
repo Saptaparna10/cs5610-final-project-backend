@@ -1,6 +1,7 @@
 package edu.northeastern.cs5610.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,6 +38,9 @@ public class CommentService {
 		//User user = userService.findUserById(userId);
 		Recipe recipe = recipeService.findRecipeById(recipeId);
 		
+		if(user == null || recipe == null)
+			return null;
+		
 		comment.setUser(user);
 		comment.setRecipe(recipe);
 		
@@ -56,7 +60,11 @@ public class CommentService {
 	@GetMapping("/api/comment/{id}")
 	public Comment findCommentById(@PathVariable("id") int id) {
 		
-		return repository.findById(id).get();
+		Optional<Comment> opt = repository.findById(id);
+		if(opt.isPresent())
+			return opt.get();
+		
+		return null;
 	}
 	
 	@GetMapping("/api/comment/user/{userId}/recipe/{recipeId}")
@@ -76,6 +84,10 @@ public class CommentService {
 	@PutMapping("/api/comment/{id}")
 	public Comment updateComment(@PathVariable("id") int id, @RequestBody Comment comment) {
 		Comment prev = findCommentById(id);
+		
+		if(prev == null)
+			return null;
+		
 		prev.set(comment);
 		return repository.save(prev);
 	}
@@ -84,6 +96,10 @@ public class CommentService {
 	public void deleteComment(@PathVariable("id") int id) {
 		
 		Comment comment = findCommentById(id);
+		
+		if(comment == null)
+			return;
+		
 		comment.getCommentingUser().getComments().remove(comment);
 		comment.getRecipe().getCommentsReceived().remove(comment);
 		

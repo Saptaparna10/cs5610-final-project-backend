@@ -33,6 +33,7 @@ public class RecipeListService {
 	@PostMapping("/api/recipelist")
 	public RecipeList createRecipeList(@RequestBody RecipeList recipeList) {
 		recipeList = repository.save(recipeList);
+		
 //		List<Recipe> recipes = recipeList.getRecipes();
 //		if(recipes != null && !recipes.isEmpty()) {
 //			for(Recipe recipe: recipes) {
@@ -44,8 +45,14 @@ public class RecipeListService {
 //				recipeService.updateRecipe(temp.getId(), temp);
 //			}
 //		}
+		
 		Moderator owner = recipeList.getModerator();
+		
 		owner =  modService.findModeratorById(owner.getId());
+		
+		if(owner == null)
+			return null;
+		
 		if(owner != null) {
 			owner.getRecipeLists().add(recipeList);
 			modService.updateModerator(owner.getId(), owner);
@@ -73,8 +80,9 @@ public class RecipeListService {
 	@PutMapping("/api/recipelist/{recipelistId}/recipe/{recipeId}")
 	public RecipeList addRecipeToRecipeList(@PathVariable("recipelistId") int recipelistId, @PathVariable("recipeId") String recipeId) {
 		
-		RecipeList recipelist = repository.findById(recipelistId).get();
+		RecipeList recipelist = findRecipeListById(recipelistId);
 		Recipe recipe = recipeService.findRecipeById(recipeId);
+		
 		if(recipelist != null && recipe != null) {
 			recipelist.addRecipeToRecipeList(recipe);
 			return repository.save(recipelist);
@@ -88,8 +96,9 @@ public class RecipeListService {
 	@DeleteMapping("/api/recipelist/{recipelistId}/recipe/{recipeId}")
 	public RecipeList removeRecipeFromRecipeList(@PathVariable("recipelistId") int recipelistId, @PathVariable("recipeId") String recipeId) {
 		
-		RecipeList recipeList = repository.findById(recipelistId).get();
+		RecipeList recipeList = findRecipeListById(recipelistId);
 		Recipe recipe = recipeService.findRecipeById(recipeId);
+		
 		if(recipeList != null && recipe != null) {
 			recipeList.removeRecipeFromRecipeList(recipe);
 			return repository.save(recipeList);
@@ -102,6 +111,8 @@ public class RecipeListService {
 	@PutMapping("/api/recipelist/{id}")
 	public RecipeList updateRecipeList(@PathVariable("id") int id, @RequestBody RecipeList recipeList) {
 		RecipeList prevlist = findRecipeListById(id);
+		if(prevlist == null)
+			return null;
 		prevlist.set(recipeList);
 		return repository.save(prevlist);
 	}

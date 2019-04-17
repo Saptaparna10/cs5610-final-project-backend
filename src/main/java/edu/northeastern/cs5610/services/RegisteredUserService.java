@@ -47,7 +47,7 @@ public class RegisteredUserService {
 	@GetMapping("/api/registereduser/{id}")
 	public RegisteredUser findRegisteredUserById(@PathVariable("id") int id) {
 		Optional<RegisteredUser> registeredUser =  repository.findById(id);
-		if(registeredUser != null) {
+		if(registeredUser.isPresent()) {
 			return registeredUser.get();
 		}
 		else {
@@ -59,6 +59,8 @@ public class RegisteredUserService {
 	@PutMapping("/api/registereduser/{id}")
 	public RegisteredUser updateRegisteredUser(@PathVariable("id") int id, @RequestBody RegisteredUser user) {
 		RegisteredUser prevUser = findRegisteredUserById(id);
+		if(prevUser == null)
+			return null;
 		prevUser.set(user);
 		return repository.save(prevUser);
 	}
@@ -67,6 +69,9 @@ public class RegisteredUserService {
 	public RegisteredUser followModerator(@PathVariable("userid") int userid, @PathVariable("moderatorId") int moderatorId) {
 		RegisteredUser user = findRegisteredUserById(userid);
 		Moderator mod = modService.findModeratorById(moderatorId);
+		
+		if(user == null || mod == null)
+			return null;
 		
 		user.addModeratorToFollowing(mod);
 		modService.updateModerator(moderatorId, mod);
@@ -78,6 +83,9 @@ public class RegisteredUserService {
 	public RegisteredUser unfollowModerator(@PathVariable("userid") int userid, @PathVariable("moderatorId") int moderatorId) {
 		RegisteredUser user = findRegisteredUserById(userid);
 		Moderator mod = modService.findModeratorById(moderatorId);
+		
+		if(user == null || mod == null)
+			return null;
 		
 		user.removeModeratorFromFollowing(mod);
 		modService.updateModerator(moderatorId, mod);

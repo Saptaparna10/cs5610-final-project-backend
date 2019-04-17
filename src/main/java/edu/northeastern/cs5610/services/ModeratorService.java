@@ -44,7 +44,7 @@ public class ModeratorService {
 	@GetMapping("/api/moderator/{id}")
 	public Moderator findModeratorById(@PathVariable("id") int id) {
 		Optional<Moderator> moderator =  repository.findById(id);
-		if(moderator != null) {
+		if(moderator.isPresent()) {
 			return moderator.get();
 		}
 		else {
@@ -55,6 +55,10 @@ public class ModeratorService {
 	@PutMapping("/api/moderator/{id}")
 	public Moderator updateModerator(@PathVariable("id") int id, @RequestBody Moderator user) {
 		Moderator prevUser = findModeratorById(id);
+		
+		if(prevUser == null)
+			return null;
+		
 		prevUser.set(user);
 		return repository.save(prevUser);
 	}
@@ -70,6 +74,9 @@ public class ModeratorService {
 	
 	@GetMapping("/api/moderator/registereduser/follower/{id}")
 	public List<RegisteredUser> findAllFollowerRegUsers(@PathVariable("id") int id){
-		return findModeratorById(id).getFollowers();
+		Moderator mod =  findModeratorById(id);
+		if(mod == null)
+			return null;
+		return mod.getFollowers();
 	}
 }
