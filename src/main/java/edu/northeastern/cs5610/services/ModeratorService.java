@@ -79,4 +79,9 @@ public class ModeratorService {
 			return null;
 		return mod.getFollowers();
 	}
+	
+	@GetMapping("/api/moderators")
+	public List<Moderator> findAllModerators(){
+		return (List<Moderator>) repository.findAll();
+	}
 }
