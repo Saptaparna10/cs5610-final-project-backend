@@ -60,7 +60,7 @@ public class ModeratorService {
 	}
 	
 	@GetMapping("/api/moderator/{id}/recipelists")
-	public List<RecipeList> getAllPlaylists(@PathVariable ("id") int id) {
+	public List<RecipeList> getAllRecipelists(@PathVariable ("id") int id) {
 		Moderator mod = findModeratorById(id);
 		if(mod != null) {
 			return mod.getRecipeLists();

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Recipe {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 //	private String content;

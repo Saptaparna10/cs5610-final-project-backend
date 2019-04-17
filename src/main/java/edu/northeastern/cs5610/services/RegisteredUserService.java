@@ -93,4 +93,15 @@ public class RegisteredUserService {
 		}
 		return null;
 	}
+	
+	@GetMapping("/api/follow/{userId}/{moderatorId}")
+	public boolean getIfUserFollowingModerator
+	(@PathVariable("userId") int userId, @PathVariable("moderatorId") int moderatorId){
+		RegisteredUser user = findRegisteredUserById(userId);
+		Moderator mod = modService.findModeratorById(moderatorId);
+		
+		if(user.getFollowing().contains(mod))
+			return true;
+		return false;
+	}
 }
