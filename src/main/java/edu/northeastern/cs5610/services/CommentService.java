@@ -67,7 +67,9 @@ public class CommentService {
 	
 	@GetMapping("/api/comment/recipe/{recipeId}")
 	public List<Comment> findAllCommentsForRecipe(@PathVariable("recipeId") String recipeId){
-		
+		Recipe recipe = recipeService.findRecipeById(recipeId);
+		if(recipe == null)
+			return null;
 		return (List<Comment>) repository.findAllCommentsForRecipe(recipeService.findRecipeById(recipeId));
 	}
 	
