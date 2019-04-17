@@ -28,8 +28,7 @@ public class RegisteredUserService {
 	RegisteredUserRepository repository;
 	
 	@Autowired
-	ModeratorService modService;
-	
+	ModeratorService modService;	
 
 	@PostMapping("/api/registeredUser/register")
 	public User register(@RequestBody RegisteredUser newUser,
@@ -100,6 +99,8 @@ public class RegisteredUserService {
 		RegisteredUser user = findRegisteredUserById(userId);
 		Moderator mod = modService.findModeratorById(moderatorId);
 		
+		if(user==null || mod == null)
+			return false;
 		if(user.getFollowing().contains(mod))
 			return true;
 		return false;
