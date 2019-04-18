@@ -163,4 +163,13 @@ public class RecipeListService {
 			deleteRecipeList(recipelist.getId());
 		}
 	}
+	
+	@GetMapping("/api/recipelist/{cid}/recipes")
+	public List<Recipe> getRecipesByRecipeList(@PathVariable ("cid") int cid) {
+		RecipeList list = findRecipeListById(cid);
+		if(list == null)
+			return null;
+		
+		return list.getRecipes();
+	}
 }
