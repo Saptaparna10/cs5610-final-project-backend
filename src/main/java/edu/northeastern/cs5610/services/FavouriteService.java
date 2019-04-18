@@ -1,5 +1,7 @@
 package edu.northeastern.cs5610.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +92,7 @@ public class FavouriteService {
 	}
 	
 	@GetMapping("/api/favorite/user/{id}")
-	public Iterable<Favourite> findFavoritesByUser(@PathVariable("id") int id) {
+	public List<Recipe> findFavoritesByUser(@PathVariable("id") int id) {
 		if(id==0)
 			return null;
 		RegisteredUser user= regUserService.findRegisteredUserById(id);
@@ -98,13 +100,16 @@ public class FavouriteService {
 		if(user == null)
 			return null;
 
-		Iterable<Favourite>  favs=  repository.findFavoritesByUser(user);
-		if(favs != null) {
-			return favs;
-		}
-		else {
+		List<Favourite>  favs=  (List<Favourite>) repository.findFavoritesByUser(user);
+		
+		if(favs == null)
 			return null;
+		
+		List<Recipe> recipes = new ArrayList<>();
+		for(Favourite fav: favs) {
+			recipes.add(fav.getFavrecipe());
 		}
+		return recipes;
 	}
 	
 	@GetMapping("/api/favorite/user/{userId}/recipe/{recipeId}")
