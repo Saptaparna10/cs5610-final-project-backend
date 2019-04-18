@@ -108,14 +108,14 @@ public class RecipeList {
 		this.setImageURL(list.getImageURL() != null ? list.getImageURL() : this.getImageURL());
 		this.setModerator(list.getModerator() != null ? list.getModerator() : this.getModerator());
 		
-		if (list.getRecipes() != null) {
-			if (this.getRecipes() == null) {
-				this.setRecipes(list.getRecipes());
-			} else if (!this.getRecipes().equals(list.getRecipes())) {
-				this.setRecipes(list.getRecipes());
-			}
-		}
-		
+//		if (list.getRecipes() != null) {
+//			if (this.getRecipes() == null) {
+//				this.setRecipes(list.getRecipes());
+//			} else if (!this.getRecipes().equals(list.getRecipes())) {
+//				this.setRecipes(list.getRecipes());
+//			}
+//		}
+//		
 	}
 
 	
