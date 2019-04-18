@@ -17,7 +17,7 @@ import edu.northeastern.cs5610.models.*;
 import edu.northeastern.cs5610.repositories.RecipeListRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 public class RecipeListService {
 	
 	@Autowired
@@ -63,7 +63,28 @@ public class RecipeListService {
 	public List<RecipeList> findAllRecipeLists(){
 		return (List<RecipeList>) repository.findAll();
 	}
-
+	
+	@GetMapping("/api/moderator/{mid}/recipe/{rid}")
+	public Boolean searchModeratorRecipeList(@PathVariable("mid") int moderatorId, @PathVariable("rid") String recipeId){
+		List<RecipeList> recipeList = (List<RecipeList>)repository.findRecipeListByModerator(modService.findModeratorById(moderatorId));
+		for(RecipeList rl : recipeList)
+		{
+			for (Recipe r : rl.getRecipes())
+			{
+				if(r.getId().equals(recipeId))
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	@GetMapping("/api/moderator/{mid}/recipelist")
+	public List<RecipeList> searchRecipeListByModerator(@PathVariable("mid") int moderatorId){
+		List<RecipeList> recipeList = (List<RecipeList>)repository.findRecipeListByModerator(modService.findModeratorById(moderatorId));
+		return recipeList;
+	}
+	
+	
 	@PutMapping("/api/recipelist/{recipelistId}/recipe/{recipeId}")
 	public RecipeList addRecipeToRecipeList(@PathVariable("recipelistId") int recipelistId, @PathVariable("recipeId") String recipeId) {
 		
