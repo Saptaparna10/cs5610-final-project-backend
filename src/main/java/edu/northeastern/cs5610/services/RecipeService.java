@@ -1,5 +1,6 @@
 package edu.northeastern.cs5610.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +22,15 @@ import edu.northeastern.cs5610.repositories.*;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", allowedHeaders = "*")
 public class RecipeService {
+	
 	@Autowired
 	RecipeRepository repository;
+	
+	@Autowired
+	RegisteredUserService userService;
+	
+	@Autowired
+	ModeratorService modService;
 	
 	@PostMapping("/api/recipe")
 	public Recipe createRecipe(@RequestBody Recipe recipe) {
@@ -81,6 +89,33 @@ public class RecipeService {
 		for(Recipe r: recipes) {
 			deleteRecipe(r.getId());
 		}
+	}
+	
+	@GetMapping("/api/user/{userId}/moderator/recipes")
+	public List<Recipe> findAllRecipesFromModerators(@PathVariable("userId") int userId){
+		RegisteredUser user = userService.findRegisteredUserById(userId);
+		if(user==null)
+			return null;
+		
+		List<Moderator> mods= userService.getModeratorsFollowing(userId);
+		
+		if(mods==null)
+			return null;
+		
+		List<RecipeList> recipeLists= new ArrayList<>();
+		
+		for(Moderator mod: mods) {
+			recipeLists.addAll(mod.getRecipeLists());
+		}
+		
+		List<Recipe> recipes= new ArrayList<>();
+		
+		for(RecipeList rl: recipeLists) {
+			recipes.addAll(rl.getRecipes());
+		}
+		
+		return recipes;
+		
 	}
 	 
 	
