@@ -139,13 +139,13 @@ public class RecipeListService {
 	@DeleteMapping("/api/recipelist/{id}")
 	public void deleteRecipeList(@PathVariable ("id") int id) {
 		RecipeList recipelist = findRecipeListById(id);
-//		List<Recipe> recipes = reciplist.getRecipes();
-//		if(recipes != null && !recipes.isEmpty()) {
-//			for(Recipe recipe: recipes) {
-//				recipe.getLists().remove(reciplist);
-//				recipeService.updateRecipe(recipe.getId(), recipe);
-//			}
-//		}
+		List<Recipe> recipes = recipelist.getRecipes();
+		if(recipes != null && !recipes.isEmpty()) {
+			for(Recipe recipe: recipes) {
+				recipe.getLists().remove(recipelist);
+				recipeService.updateRecipe(recipe.getId(), recipe);
+			}
+		}
 		Moderator owner = recipelist.getModerator();
 		if(owner != null) {
 			owner.getRecipeLists().remove(recipelist);
