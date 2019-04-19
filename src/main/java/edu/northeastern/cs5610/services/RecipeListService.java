@@ -174,4 +174,13 @@ public class RecipeListService {
 
 		return list.getRecipes();
 	}
+	
+	@GetMapping("/api/recipelist/{cid}/moderator")
+	public Moderator findModeratorForRecipeList(@PathVariable ("cid") int cid) {
+		RecipeList list = findRecipeListById(cid);
+		if(list == null)
+			return null;
+		
+		return list.getModerator();
+	}
 }
