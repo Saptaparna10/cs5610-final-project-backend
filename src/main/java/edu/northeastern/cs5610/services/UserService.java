@@ -41,6 +41,7 @@ public class UserService {
 	@GetMapping("/api/profile")
 	public User profile(HttpSession session) {
 		User currentUser = (User) session.getAttribute("currentUser");	
+		currentUser = findUserById(currentUser.getId());
 		return currentUser;
 	}
 
