@@ -27,11 +27,11 @@ public class RecipeList {
 	private String name;
 	private String imageURL;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JsonIgnore
 	private Moderator moderator;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
 	@JoinTable(name = "recipeToList")
 	@JsonIgnore
 	private List<Recipe> recipes;

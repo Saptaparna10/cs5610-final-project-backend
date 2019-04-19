@@ -23,11 +23,11 @@ public class Moderator extends User {
 	// instance variables
 	private Date startDate;
 	
-	@OneToMany(mappedBy = "moderator",cascade=CascadeType.ALL,orphanRemoval=true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "moderator",cascade=CascadeType.ALL,orphanRemoval=true)
 	@JsonIgnore
 	private List<RecipeList> recipeLists;
 	
-	@ManyToMany(mappedBy = "following",fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "following")
 	@JsonIgnore
 	private List<RegisteredUser> followers;
 
