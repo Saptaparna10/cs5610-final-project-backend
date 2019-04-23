@@ -175,6 +175,16 @@ public class RecipeListService {
 		return list.getRecipes();
 	}
 	
+	@GetMapping("/api/recipelist/{name}/recipes")
+	public List<Recipe> getRecipesByRecipeListName(@PathVariable ("name") String name) {
+		RecipeList list = findRecipListByName(name);
+		if(list == null)
+			return null;
+
+		return list.getRecipes();
+	}
+	
+	
 	@GetMapping("/api/recipelist/{cid}/moderator")
 	public Moderator findModeratorForRecipeList(@PathVariable ("cid") int cid) {
 		RecipeList list = findRecipeListById(cid);
