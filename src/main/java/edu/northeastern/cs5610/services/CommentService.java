@@ -88,10 +88,10 @@ public class CommentService {
 	@PutMapping("/api/comment/{id}")
 	public Comment updateComment(@PathVariable("id") int id, @RequestBody Comment comment) {
 		Comment prev = findCommentById(id);
-		
+		Date date = new Date();
 		if(prev == null)
 			return null;
-		
+		comment.setDateCreated(date);
 		prev.set(comment);
 		return repository.save(prev);
 	}

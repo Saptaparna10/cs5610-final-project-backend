@@ -88,6 +88,7 @@ public class Comment {
 	
 	public void set(Comment comment) {
 		this.setContent(comment.getContent() != null ? comment.getContent() : this.getContent());
+		this.setDateCreated(comment.getDateCreated() != null ? comment.getDateCreated() : this.getDateCreated());
 	}
 
 	@Override
