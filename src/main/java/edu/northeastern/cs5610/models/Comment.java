@@ -1,5 +1,8 @@
 package edu.northeastern.cs5610.models;
 
+
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +19,8 @@ public class Comment {
 	int id;
 	
 	private String content;
-
+	
+	private Date dateCreated;
 
 	@ManyToOne
 	@JsonIgnore
@@ -30,6 +34,14 @@ public class Comment {
 	
 	public Comment() {
 		
+	}
+	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 	
 	public Recipe getRecipe() {

@@ -1,5 +1,7 @@
 package edu.northeastern.cs5610.services;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +43,10 @@ public class CommentService {
 		if(user == null || recipe == null)
 			return null;
 		
+		Date date = new Date();
 		comment.setUser(user);
 		comment.setRecipe(recipe);
+		comment.setDateCreated(date);
 		
 		comment = repository.save(comment);
 		recipe.getCommentsReceived().add(comment);
