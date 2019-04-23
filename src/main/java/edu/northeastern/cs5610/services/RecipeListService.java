@@ -17,7 +17,7 @@ import edu.northeastern.cs5610.models.*;
 import edu.northeastern.cs5610.repositories.RecipeListRepository;
 
 @RestController
-@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = "https://prsalwayshungry.herokuapp.com", allowCredentials = "true", allowedHeaders = "*")
 public class RecipeListService {
 
 	@Autowired
