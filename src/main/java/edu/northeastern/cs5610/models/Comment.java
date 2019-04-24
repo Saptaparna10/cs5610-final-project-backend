@@ -102,10 +102,7 @@ public class Comment {
 		return result;
 	}
 
-	/**
-	 * Overridden version of the equals method Two moderator are considered equal only
-	 * if they have the same id
-	 */
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Comment) {
