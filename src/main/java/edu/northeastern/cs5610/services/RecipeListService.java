@@ -175,7 +175,7 @@ public class RecipeListService {
 		return list.getRecipes();
 	}
 	
-	@GetMapping("/api/recipelist/{name}/recipes")
+	@GetMapping("/api/recipelist/name/{name}/recipes")
 	public List<Recipe> getRecipesByRecipeListName(@PathVariable ("name") String name) {
 		RecipeList list = findRecipListByName(name);
 		if(list == null)
